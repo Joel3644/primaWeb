@@ -1,0 +1,24 @@
+@{
+    ViewData["Title"] = "Prodotti";
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p>Pagina dei prodotti...</p>
+
+<table class="table">
+@{
+    string[,] headCol = 
+    {{"Product", "Pieces", "Price", "Available"},
+    {"Phone", "3", "1000$", "yes"},
+    {"PC", "4", "1500$", "yes"},
+    {"car", "0", "20000$", "no"}};
+
+    for(int x = 0; x < 4; x++){
+        <tr>
+            <td>@(headCol[x, 0])</td>
+            <td>@(headCol[x, 1])</td>
+            <td>@(headCol[x, 2])</td>
+            <td>@(headCol[x, 3])</td>
+        </tr>
+    }
+}
+</table>
