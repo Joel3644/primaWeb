@@ -7,6 +7,8 @@ namespace dervishi.joel._5i.PrimaWeb.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    static readonly List<Product> product = new();
+    static readonly List<User> users = new();
 
     public HomeController(ILogger<HomeController> logger)
     {
@@ -15,27 +17,52 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        HttpContext.Session.SetString("NomeUtente", "Joel Dervishi");
         return View();
     }
 
     public IActionResult Privacy()
     {
+        string? nomeUtente = HttpContext.Session.GetString("NomeUtente");
+        if (string.IsNullOrEmpty(nomeUtente))
+            return Redirect("\\home\\index");
+        return View(nomeUtente);
+    }
+
+    public IActionResult Purchase()
+    {
         return View();
     }
 
-    public IActionResult Prodotto()
+    [HttpGet]
+    public IActionResult Cart()
+    {
+        return View(product);
+    }
+    
+    [HttpGet]
+    public IActionResult SignUp()
     {
         return View();
     }
     
-    [HttpGet]
-    public IActionResult Prenota()
-    {
-        return View();
-    }
     [HttpPost]
-    public IActionResult Prenota(Prenotazione p)
+    public IActionResult SignUp(User u)
     {
+        return View(u);
+    }
+    
+    [HttpPost]
+    public IActionResult Conferma(User u)
+    {
+        users.Add(u);
+        return View(u);
+    }
+    
+    [HttpPost]
+    public IActionResult Purchase(Product p)
+    {
+        product.Add(p);
         return View(p);
     }
 
